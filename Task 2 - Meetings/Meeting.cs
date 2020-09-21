@@ -53,7 +53,43 @@ namespace Meetings
         public static List<Meeting> MergeRanges(List<Meeting> meetings)
         {
             // Implement me
-	    return new List<Meeting>();
+            int max = -1;
+            for (int i = 0; i < meetings.Count; i++){
+                if (meetings[i].EndTime > max){
+                    max = meetings[i].EndTime;
+                }
+            }
+
+            bool[] mask = new bool[max+1];
+
+            foreach (var meet in meetings)
+            {
+                for (int i = meet.StartTime; i < meet.EndTime; i++){
+                    mask[i] = true;
+                }
+            }
+
+            bool started = false;
+            int start = -1;
+            var output = new List<Meeting>();
+            for (int i = 0; i < mask.Length; i++)
+            {
+                if (started && mask[i]){continue;}
+
+                if (!started && mask[i])
+                {
+                    start = i;
+                    started = true;
+                }
+                else if (started && !mask[i])
+                {
+                    output.Add(new Meeting(start, i));
+                    started = false;
+                }
+            }
+            if( started){output.Add(new Meeting(start, mask.Length));}    
+
+	        return output;
         }
     }
 }
