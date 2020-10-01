@@ -10,4 +10,7 @@
             return "gg ez";
         }
     }
+    static void Main(){
+        Console.WriteLine("Pandemon");
+    }
 }
