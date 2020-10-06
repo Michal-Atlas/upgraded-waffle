@@ -4,9 +4,10 @@ namespace PhotoAlbum
 {
     class Program
     {
+        public static Album _album = new Album();
         static void Main(string[] args)
         {
-            Console.WriteLine("You got this");
+            while (ControlMenu.Run());
         }
     }
 }

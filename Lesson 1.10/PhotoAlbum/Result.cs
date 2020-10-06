@@ -1,7 +1,9 @@
 ﻿namespace PhotoAlbum
 {
-    public class Result
+    public enum Result
     {
-
+        OK,
+        FAULT,
+        FAULT_DB
     }
 }
