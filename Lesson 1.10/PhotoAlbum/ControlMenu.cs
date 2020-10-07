@@ -18,7 +18,9 @@ namespace PhotoAlbum
     }
     public static class ControlMenu
     {
-        private static Dictionary<Command, (string, Action)> CommDict = new Dictionary<Command, (string, Action)>()
+        private static int IDindex = 0;
+        private static Stack<int> Deletes = new Stack<int>();
+        private static Dictionary<Command, (string, Action<Album>)> CommDict = new Dictionary<Command, (string, Action<Album>)>()
         {
             {Command.ADD, ("Add", SubMenu_add)},
             {Command.REMOVE, ("Remove", SubMenu_remove)},
@@ -26,8 +28,9 @@ namespace PhotoAlbum
             {Command.SHOW_ALL, ("Show All", SubMenu_show_all)},
             {Command.EXIT, ("Exit", null)}
         };
-        static public bool Run()
+        static public bool Run(Album album)
         {
+            Console.WriteLine("----------");
             foreach (var i in CommDict)
             {
                 Console.WriteLine($" - [{(int)i.Key}] {i.Value.Item1}");
@@ -54,29 +57,27 @@ namespace PhotoAlbum
 
             if ((Command) userComm != Command.EXIT)
             {
-                CommDict[(Command) userComm].Item2();
+                CommDict[(Command) userComm].Item2(album);
                 return true;
             }
             return false;
         }
 
-        static void SubMenu_add()
+        static void SubMenu_add(Album album)
         {
             Console.WriteLine("::Add Submenu Invoked::");
             Console.Write("[NAME] >> ");
             string name = Console.ReadLine();
             Console.Write("[PATH] >> ");
             string path = Console.ReadLine();
+
+            int id = Deletes.Count > 0 ? Deletes.Pop() : IDindex++;
             
-            MD5 md5Hasher = MD5.Create();
-            var hashed = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(path));
-            var ivalue = Math.Abs(BitConverter.ToInt32(hashed, 0));
-            
-            Console.WriteLine($"[Generated ID] > {ivalue}");
-            Photo photo = new Photo(ivalue, name, path);
-            Program._album.Add(photo);
+            Console.WriteLine($"[Generated ID] > {id}");
+            var result = album.Add(new Photo(id, name, path));
+            Console.WriteLine(result);
         }
-        static void SubMenu_remove()
+        static void SubMenu_remove(Album album)
         {
             Console.WriteLine("::Remove Submenu Invoked::");
             
@@ -94,8 +95,11 @@ namespace PhotoAlbum
                 }
             }
 
+            var result = album.Remove(userComm);
+            if (result == Result.OK){Deletes.Push(userComm);}
+            Console.WriteLine(result);
         }
-        static void SubMenu_show()
+        static void SubMenu_show(Album album)
         {
             Console.WriteLine("::Show Submenu Invoked::");
             
@@ -113,13 +117,13 @@ namespace PhotoAlbum
                 }
             }
             
-            Program._album.Show(userComm);
+            album.Show(userComm);
         }
-        static void SubMenu_show_all()
+        static void SubMenu_show_all(Album album)
         {
             Console.WriteLine("::Show All Submenu Invoked::");
             Console.WriteLine("\n[ID]\t[Name]\t[Path]\n");
-            foreach (var photo in Program._album.GetAllPhotos())
+            foreach (var photo in album.GetAllPhotos())
             {
                 Console.WriteLine($"[{photo.Id}]\t{photo.Name}\t{photo.Path}");
             }
@@ -127,7 +131,7 @@ namespace PhotoAlbum
 
         public static void Show(Photo photo)
         {
-            System.Diagnostics.Process.Start(photo.Path);
+            Process.Start(photo.Path);
         }
     }
 }
