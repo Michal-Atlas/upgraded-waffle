@@ -4,11 +4,31 @@ namespace Stocks
 {
     public class Stock
     {
-
+        /*public static void Main()
+        {
+            int[] stockPrices = { 10, 7, 5, 8, 11, 9 };
+            int got = Stock.GetMaxProfit(stockPrices);
+            int exp = 6;
+            Console.WriteLine((exp, got));
+        }*/
         public static int GetMaxProfit(int[] stockPrices)
         {
-           // Implement me
-           return 0;
+            if (stockPrices.Length < 2)
+            {
+                throw new ArgumentException();}
+            int min = int.MaxValue;
+            int diff = 0;
+            for (int i = 0; i < stockPrices.Length; i++) {
+                if (stockPrices[i] < min) {
+                    for (int j = i; j < stockPrices.Length; j++) {
+                        if ((stockPrices[j] - stockPrices[i]) > diff)
+                        {
+                            diff = stockPrices[j] - stockPrices[i];
+                        }
+                    }
+                }
+            }
+           return diff;
         }
     }
 }
