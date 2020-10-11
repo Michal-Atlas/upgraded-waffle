@@ -1,4 +1,6 @@
-﻿namespace PhotoAlbum
+﻿using System.Security.Permissions;
+
+namespace PhotoAlbum
 {
     public enum Result
     {
