@@ -17,10 +17,10 @@ namespace Stocks
             {
                 throw new ArgumentException();}
             int min = int.MaxValue;
-            int diff = 0;
+            int diff = int.MinValue;
             for (int i = 0; i < stockPrices.Length; i++) {
                 if (stockPrices[i] < min) {
-                    for (int j = i; j < stockPrices.Length; j++) {
+                    for (int j = i+1; j < stockPrices.Length; j++) {
                         if ((stockPrices[j] - stockPrices[i]) > diff)
                         {
                             diff = stockPrices[j] - stockPrices[i];
