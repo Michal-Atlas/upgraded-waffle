@@ -96,7 +96,15 @@ namespace PhotoAlbum
             }
 
             var result = album.Remove(userComm);
-            if (result == Result.OK){Deletes.Push(userComm);}
+            if (result == Result.OK)
+            {
+                Deletes.Push(userComm);
+                Console.WriteLine("OK");
+            }
+            else
+            {
+                Console.WriteLine("Delete Failed");
+            }
             Console.WriteLine(result);
         }
         static void SubMenu_show(Album album)
@@ -131,7 +139,7 @@ namespace PhotoAlbum
 
         public static void Show(Photo photo)
         {
-            Process.Start(photo.Path);
+            Process.Start("xdg-open ", photo.Path);
         }
     }
 }
