@@ -1,13 +1,19 @@
-﻿namespace FlippingPoint
+﻿using System;
+
+namespace FlippingPoint
 {
     public class Flipper
     {
         public static int FindFlippingPoint(string[] words)
         {
-            // Find the Flipping point in the array
+            int i = 1;
+            while (i < words.Length && String.Compare(words[i-1], words[i], StringComparison.Ordinal) < 0)
+            {
+                i++;
+            }
 
 
-            return 0;
+            return i;
         }
     }
 }
