@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,19 @@ namespace LinqPractise
         {
             _transactions = transactions;
         }
+
+        public void Test()
+        {
+            var list = new List<int>
+            {
+                1,2,3,4,5,5
+            };
+
+            list.Add(5);
+
+            list.Where((number) => number == 5);
+        }
+
 
         /// <summary>
         /// Find all transactions in 2011 and order it by value

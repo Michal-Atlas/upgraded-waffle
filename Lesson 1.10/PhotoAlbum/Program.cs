@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using PhotoAlbum.Abstract;
+using PhotoAlbum.Logger;
 
 namespace PhotoAlbum
 {
