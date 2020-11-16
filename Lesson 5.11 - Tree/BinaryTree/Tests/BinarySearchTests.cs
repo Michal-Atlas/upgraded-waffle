@@ -14,37 +14,13 @@ namespace BinaryTree.Tests
             _random = new Random();
         }
 
-        private bool CompareNodes(Node x, Node y)
-        {
-            if (x == null && y == null) return true;
-            if ((x != null) ^ (y != null)) return false;
-            return x.Value == y.Value && CompareNodes(x.LeftChild, y.LeftChild) &&
-                   CompareNodes(x.RightChild, y.RightChild);
-        }
-
-        [Fact]
-        public void ComparePositiveTest()
-        {
-            var x = new Node(0, new Node(5), new Node(4, new Node(3)));
-            var y = new Node(0, new Node(5), new Node(4, new Node(3)));
-            Assert.True(CompareNodes(x, y));
-        }
-
-        [Fact]
-        public void CompareNegativeTest()
-        {
-            var x = new Node(0, new Node(5), new Node(4));
-            var y = new Node(0, new Node(5), new Node(4, new Node(3)));
-            Assert.False(CompareNodes(x, y));
-        }
-
         [Fact]
         public void InsertTest()
         {
             var start = new BinarySearchTree {Root = new Node(5, new Node(2), new Node(8))};
             var exp = new BinarySearchTree {Root = new Node(5, new Node(2), new Node(8, new Node(6)))};
             start.Insert(6);
-            Assert.True(CompareNodes(start.Root, exp.Root));
+            Assert.True(Node.CompareNodes(start.Root, exp.Root));
         }
 
         [Fact]
@@ -53,7 +29,7 @@ namespace BinaryTree.Tests
             var start = new BinarySearchTree {Root = new Node(5, new Node(2), new Node(8, new Node(6)))};
             var exp = new BinarySearchTree {Root = new Node(5, new Node(2), new Node(8))};
             start.Delete(6);
-            Assert.True(CompareNodes(start.Root, exp.Root));
+            Assert.True(Node.CompareNodes(start.Root, exp.Root));
         }
 
         [Fact]
