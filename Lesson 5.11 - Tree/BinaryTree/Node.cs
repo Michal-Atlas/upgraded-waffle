@@ -19,5 +19,13 @@
             return Value + "{" + (LeftChild != null ? LeftChild.ToString() : "-") +
                    (RightChild != null ? RightChild.ToString() : "-") + "}";
         }
+
+        public static bool CompareNodes(Node x, Node y)
+        {
+            if (x == null && y == null) return true;
+            if ((x != null) ^ (y != null)) return false;
+            return x.Value == y.Value && CompareNodes(x.LeftChild, y.LeftChild) &&
+                   CompareNodes(x.RightChild, y.RightChild);
+        }
     }
 }
